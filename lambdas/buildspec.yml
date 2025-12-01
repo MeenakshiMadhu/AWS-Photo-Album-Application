@@ -1,0 +1,64 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.9
+    commands:
+      - echo "Installing pip..."
+      - pip install --upgrade pip
+      
+  pre_build:
+    commands:
+      - echo "Installing Lambda dependencies..."
+      - pip install opensearchpy requests-aws4auth boto3 -t ./package
+      
+  build:
+    commands:
+      - echo "Building Lambda deployment packages..."
+      
+      # Create package for index-photos Lambda
+      - echo "Packaging index-photos Lambda..."
+      - cd package
+      - zip -r9 ../index-photos.zip .
+      - cd ..
+      - zip -g index-photos.zip index-photos.py
+      - ls -lh index-photos.zip
+      
+      # Create package for search-photos Lambda
+      - echo "Packaging search-photos Lambda..."
+      - cd package
+      - zip -r9 ../search-photos.zip .
+      - cd ..
+      - zip -g search-photos.zip search-photos.py
+      - ls -lh search-photos.zip
+      
+      - echo "Lambda packages created successfully"
+      
+  post_build:
+    commands:
+      - echo "Deploying Lambda functions..."
+      
+      # Update index-photos Lambda function
+      - echo "Updating index-photos Lambda..."
+      - |
+        aws lambda update-function-code \
+          --function-name index-photos \
+          --zip-file fileb://index-photos.zip \
+          --region us-east-1
+      
+      # Update search-photos Lambda function  
+      - echo "Updating search-photos Lambda..."
+      - |
+        aws lambda update-function-code \
+          --function-name search-photos \
+          --zip-file fileb://search-photos.zip \
+          --region us-east-1
+      
+      - echo "Lambda deployment completed successfully!"
+
+artifacts:
+  files:
+    - index-photos.zip
+    - search-photos.zip
+  name: LambdaArtifacts
