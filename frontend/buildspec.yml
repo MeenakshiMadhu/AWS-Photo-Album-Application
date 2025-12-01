@@ -16,13 +16,16 @@ phases:
   build:
     commands:
       - echo "Build phase - preparing frontend files..."
+      - cd frontend
       - ls -la
       
   post_build:
     commands:
-      - echo "Deploying to S3..."
-      - aws s3 sync frontend/ s3://photo-album-frontend-ml/ --delete --exclude "buildspec.yml" --region us-east-1
-      - aws s3 cp s3://photo-album-frontend-ml/ s3://photo-album-frontend-ml/ --recursive --metadata-directive REPLACE --cache-control max-age=86400 --region us-east-1
+      - echo "Deploying to S3 with proper content types..."
+      - aws s3 sync frontend/ s3://photo-album-frontend-ml/ --delete --exclude "*" --include "*.html" --content-type "text/html" --cache-control "max-age=0" --region us-east-1
+      - aws s3 sync frontend/ s3://photo-album-frontend-ml/ --exclude "*" --include "*.js" --content-type "application/javascript" --cache-control "max-age=86400" --region us-east-1
+      - aws s3 sync frontend/ s3://photo-album-frontend-ml/ --exclude "*" --include "*.css" --content-type "text/css" --cache-control "max-age=86400" --region us-east-1
+      - aws s3 sync frontend/ s3://photo-album-frontend-ml/ --exclude "*.html" --exclude "*.js" --exclude "*.css" --exclude "buildspec.yml" --region us-east-1
       - echo "Frontend deployment completed successfully!"
       - echo "Website URL - http://photo-album-frontend-ml.s3-website-us-east-1.amazonaws.com"
 
