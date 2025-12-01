@@ -21,12 +21,12 @@ phases:
   post_build:
     commands:
       - echo "Deploying to S3..."
-      - aws s3 sync . s3://photo-album-frontend-ml/ --delete --exclude ".git/*" --exclude "buildspec.yml" --exclude "README.md" --exclude ".gitignore" --exclude "node_modules/*" --region us-east-1
+      - aws s3 sync frontend/ s3://photo-album-frontend-ml/ --delete --exclude "buildspec.yml" --region us-east-1
       - aws s3 cp s3://photo-album-frontend-ml/ s3://photo-album-frontend-ml/ --recursive --metadata-directive REPLACE --cache-control max-age=86400 --region us-east-1
       - echo "Frontend deployment completed successfully!"
       - echo "Website URL - http://photo-album-frontend-ml.s3-website-us-east-1.amazonaws.com"
 
 artifacts:
   files:
-    - '**/*'
+    - 'frontend/**/*'
   name: FrontendArtifacts
