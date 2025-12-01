@@ -22,7 +22,7 @@ phases:
       - cd package
       - zip -r9 ../index-photos.zip .
       - cd ..
-      - zip -g index-photos.zip index-photos.py
+      - zip -g index-photos.zip lambdas/index-photos.py
       - ls -lh index-photos.zip
       
       # Create package for search-photos Lambda
@@ -30,7 +30,7 @@ phases:
       - cd package
       - zip -r9 ../search-photos.zip .
       - cd ..
-      - zip -g search-photos.zip search-photos.py
+      - zip -g search-photos.zip lambdas/search-photos.py
       - ls -lh search-photos.zip
       
       - echo "Lambda packages created successfully"
