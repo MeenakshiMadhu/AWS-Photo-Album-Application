@@ -113,6 +113,15 @@ def lambda_handler(event, context):
         print("Verifying document was indexed...")
         verify_response = es.get(index=ES_INDEX, id=key)
         print("Verification response:", json.dumps(verify_response, default=str))
+
+        return {
+            'statusCode': 200,
+            'body': json.dumps({
+                'message': 'Photo indexed successfully',
+                'objectKey': key,
+                'labels': labels
+            })
+        }
     
     # End
     except Exception as e:
