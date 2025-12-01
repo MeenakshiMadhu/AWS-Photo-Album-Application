@@ -16,8 +16,7 @@ phases:
   build:
     commands:
       - echo "Build phase - preparing frontend files..."
-      - cd frontend
-      - ls -la
+      - ls -la frontend/
       
   post_build:
     commands:
