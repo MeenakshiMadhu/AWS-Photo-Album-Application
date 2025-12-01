@@ -11,7 +11,7 @@ phases:
   pre_build:
     commands:
       - echo "Installing Lambda dependencies..."
-      - pip install opensearchpy requests-aws4auth boto3 -t ./package
+      - pip install opensearch-py requests-aws4auth boto3 -t ./package
       
   build:
     commands:
