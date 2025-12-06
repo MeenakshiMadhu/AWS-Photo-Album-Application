@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 from opensearchpy import OpenSearch, RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
-
+# comment to check pipeline
 rekognition = boto3.client('rekognition', region_name='us-east-1')
 s3 = boto3.client('s3', region_name='us-east-1')
 
