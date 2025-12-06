@@ -1,4 +1,4 @@
-const API_ENDPOINT = 'https://yi62mb852k.execute-api.us-east-1.amazonaws.com/prod';
+const API_ENDPOINT = 'https://uuh0u6vum4.execute-api.us-east-1.amazonaws.com/prod';
 const API_KEY = 'GqljqurJQQm30OmqxckZ4vOfyThQEBg4U0kl7cD9';
 const BUCKET_NAME = 'photo-storage-ml';
 
