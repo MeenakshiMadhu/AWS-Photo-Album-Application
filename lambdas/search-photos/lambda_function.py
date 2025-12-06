@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 from opensearchpy import OpenSearch, RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
-
+# checking
 lex_client = boto3.client('lexv2-runtime', region_name='us-east-1')
 s3 = boto3.client('s3', region_name='us-east-1')
 
