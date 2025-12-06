@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo "No backend dependencies, skipping install"
+
+  build:
+    commands:
+      - echo "Building Frontend..."
+
+  post_build:
+    commands:
+      - echo "Deploying frontend to S3..."
+      - aws s3 sync ./frontend s3://photo-album-frontend-ml --delete

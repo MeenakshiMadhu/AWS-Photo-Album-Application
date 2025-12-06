@@ -56,7 +56,7 @@ async function searchPhotos() {
         if (resultsDiv) {
             resultsDiv.innerHTML = `
                 <div class="error-message">
-                    ❌ Search failed: ${error.message}
+                    Search failed: ${error.message}
                     <br><small>Check the browser console for details</small>
                 </div>
             `;
@@ -213,7 +213,7 @@ async function uploadPhoto() {
         if (response.ok || response.status === 200) {
             showMessage(
                 'uploadMessage', 
-                `✅ Photo uploaded successfully! It will be indexed in a few seconds. You can then search for it.`,
+                `Photo uploaded successfully! It will be indexed in a few seconds. You can then search for it.`,
                 'success'
             );
             
@@ -234,7 +234,7 @@ async function uploadPhoto() {
         console.error('Upload error:', error);
         showMessage(
             'uploadMessage',
-            `❌ Upload failed: ${error.message}. Check the browser console for details.`,
+            `Upload failed: ${error.message}. Check the browser console for details.`,
             'error'
         );
     }
@@ -278,11 +278,11 @@ console.log('Bucket:', BUCKET_NAME);
 
 // Check if configuration is set
 if (API_ENDPOINT.includes('YOUR-API-ID')) {
-    console.warn('⚠️ WARNING: Please update the API_ENDPOINT in script.js with your actual API Gateway URL');
+    console.warn('WARNING: Please update the API_ENDPOINT in script.js with your actual API Gateway URL');
 }
 if (API_KEY === 'YOUR-API-KEY-HERE') {
-    console.warn('⚠️ WARNING: Please update the API_KEY in script.js with your actual API key');
+    console.warn('WARNING: Please update the API_KEY in script.js with your actual API key');
 }
 if (BUCKET_NAME === 'YOUR-PHOTO-BUCKET-NAME') {
-    console.warn('⚠️ WARNING: Please update the BUCKET_NAME in script.js with your actual S3 bucket name');
+    console.warn('WARNING: Please update the BUCKET_NAME in script.js with your actual S3 bucket name');
 }

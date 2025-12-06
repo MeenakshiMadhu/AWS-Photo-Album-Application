@@ -1,0 +1,80 @@
+version: 0.2
+
+phases:
+  install:
+    # runtime-versions:
+    #   python: 3.9
+    commands:
+      - echo "Installing dependencies"
+      - pip install -r lambdas/index-photos/requirements.txt -t lambdas/index-photos/
+      - pip install -r lambdas/search-photos/requirements.txt -t lambdas/search-photos/
+      # - pip install --upgrade pip
+      
+  # pre_build:
+  #   commands:
+  #     - echo "Installing Lambda dependencies..."
+  #     - pip install opensearch-py requests-aws4auth boto3 -t ./package
+      
+  build:
+    commands:
+      # - echo "Building Lambda deployment packages..."
+      
+      # # Create package for index-photos Lambda
+      # - echo "Packaging index-photos Lambda..."
+      # - cd package
+      # - zip -r9 ../index-photos.zip .
+      # - cd ..
+      # - zip -g index-photos.zip lambdas/index-photos.py
+      # - ls -lh index-photos.zip
+      
+      # # Create package for search-photos Lambda
+      # - echo "Packaging search-photos Lambda..."
+      # - cd package
+      # - zip -r9 ../search-photos.zip .
+      # - cd ..
+      # - zip -g search-photos.zip lambdas/search-photos.py
+      # - ls -lh search-photos.zip
+      - echo "Zipping Lambda functions"
+
+      - cd lambdas/index-photos
+      - zip -r ../../index-photos.zip .
+      - cd ../..
+
+      - cd lambdas/search-photos
+      - zip -r ../../search-photos.zip .
+      - cd ../..
+      - echo "Lambda packages created successfully"
+      
+  post_build:
+    commands:
+      - echo "Deploying Lambdas"
+      - aws lambda update-function-code --function-name index-photos --zip-file fileb://index-photos.zip
+      - aws lambda update-function-code --function-name search-photos --zip-file fileb://search-photos.zip
+
+      - echo "Deploying Frontend"
+      - aws s3 sync ./frontend s3://photo-album-frontend-ml
+      # - echo "Deploying Lambda functions..."
+      
+      # # Update index-photos Lambda function
+      # - echo "Updating index-photos Lambda..."
+      # - |
+      #   aws lambda update-function-code \
+      #     --function-name index-photos \
+      #     --zip-file fileb://index-photos.zip \
+      #     --region us-east-1
+      
+      # # Update search-photos Lambda function  
+      # - echo "Updating search-photos Lambda..."
+      # - |
+      #   aws lambda update-function-code \
+      #     --function-name search-photos \
+      #     --zip-file fileb://search-photos.zip \
+      #     --region us-east-1
+      
+      # - echo "Lambda deployment completed successfully!"
+
+# artifacts:
+#   files:
+#     - index-photos.zip
+#     - search-photos.zip
+#   name: LambdaArtifacts
